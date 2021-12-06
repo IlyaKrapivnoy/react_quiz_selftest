@@ -42,10 +42,12 @@ export default function App() {
 
 const [currentQuestion, setCurrentQuestion] = useState(0);
 const [showScore, setShowScore] = useState(false);
+const [score, setScore] = useState(0);
 
 const handleAnswerButtonClick = (isCorrect) => {
     if (isCorrect === true) {
         alert('yeah');
+        setScore(score + 1);
     }
 
     const nextQuestion = currentQuestion + 1;
@@ -60,7 +62,7 @@ return (
     <div className='app'>
         {showScore ? (
             <div className='score-section'>
-                You scored 1 out of {questions.length}
+                You scored {score} out of {questions.length}
             </div>
         ) : (
             <>
