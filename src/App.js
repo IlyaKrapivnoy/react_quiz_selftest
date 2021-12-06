@@ -40,29 +40,38 @@ export default function App() {
         },
     ];
 
-    return (
-        <div className='app'>
-            {false ? (
-                <div className='score-section'>
-                    You scored 1 out of {questions.length}
+const [currentQuestion, setCurrentQuestion] = useState(0);
+const handleAnswerButtonClick = () => {
+    setCurrentQuestion(currentQuestion + 1);
+};
+
+return (
+    <div className='app'>
+        {false ? (
+            <div className='score-section'>
+                You scored 1 out of {questions.length}
+            </div>
+        ) : (
+            <>
+                <div className='question-section'>
+                    <div className='question-count'>
+                        <span>Question 1</span>/{questions.length}
+                    </div>
+                    <div className='question-text'>
+                        {questions[currentQuestion].questionText}
+                    </div>
                 </div>
-            ) : (
-                <>
-                    <div className='question-section'>
-                        <div className='question-count'>
-                            <span>Question 1</span>/{questions.length}
-                        </div>
-                        <div className='question-text'>
-                            {questions[0].questionText}
-                        </div>
-                    </div>
-                    <div className='answer-section'>
-                        {questions[0].answerOptions.map((answerOption) => (
-                            <button>{answerOption.answerText}</button>
-                        ))}
-                    </div>
-                </>
-            )}
-        </div>
-    );
+                <div className='answer-section'>
+                    {questions[currentQuestion].answerOptions.map(
+                        (answerOption) => (
+                            <button onClick={handleAnswerButtonClick}>
+                                {answerOption.answerText}
+                            </button>
+                        )
+                    )}
+                </div>
+            </>
+        )}
+    </div>
+);
 }
