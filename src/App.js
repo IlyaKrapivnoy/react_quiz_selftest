@@ -43,7 +43,12 @@ export default function App() {
 const [currentQuestion, setCurrentQuestion] = useState(0);
 const handleAnswerButtonClick = () => {
     const nextQuestion = currentQuestion + 1;
-    setCurrentQuestion(nextQuestion);
+    if (nextQuestion < questions.length) {
+        setCurrentQuestion(nextQuestion);
+    } else {
+        alert('the end');
+        setCurrentQuestion(0);
+    }
 };
 
 return (
