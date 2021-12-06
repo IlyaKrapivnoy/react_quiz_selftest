@@ -43,7 +43,11 @@ export default function App() {
 const [currentQuestion, setCurrentQuestion] = useState(0);
 const [showScore, setShowScore] = useState(false);
 
-const handleAnswerButtonClick = () => {
+const handleAnswerButtonClick = (isCorrect) => {
+    if (isCorrect === true) {
+        alert('yeah');
+    }
+
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
         setCurrentQuestion(nextQuestion);
@@ -71,7 +75,13 @@ return (
                 <div className='answer-section'>
                     {questions[currentQuestion].answerOptions.map(
                         (answerOption) => (
-                            <button onClick={handleAnswerButtonClick}>
+                            <button
+                                onClick={() =>
+                                    handleAnswerButtonClick(
+                                        answerOption.isCorrect
+                                    )
+                                }
+                            >
                                 {answerOption.answerText}
                             </button>
                         )
