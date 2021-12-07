@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Header from './components/Header';
 
 export default function App() {
     const questions = [
@@ -59,47 +60,50 @@ export default function App() {
     };
 
     return (
-        <div className='app'>
-            {showScore ? (
-                <div className='score-section'>
-                    You scored {score} out of {questions.length}
-                    <button
-                        onClick={() => {
-                            setShowScore(false);
-                            setCurrentQuestion(0);
-                        }}
-                    >
-                        Play again
-                    </button>
-                </div>
-            ) : (
-                <>
-                    <div className='question-section'>
-                        <div className='question-count'>
-                            <span>Question {currentQuestion + 1}</span>/
-                            {questions.length}
-                        </div>
-                        <div className='question-text'>
-                            {questions[currentQuestion].questionText}
-                        </div>
+        <>
+            <Header />
+            <div className='app'>
+                {showScore ? (
+                    <div className='score-section'>
+                        You scored {score} out of {questions.length}
+                        <button
+                            onClick={() => {
+                                setShowScore(false);
+                                setCurrentQuestion(0);
+                            }}
+                        >
+                            Play again
+                        </button>
                     </div>
-                    <div className='answer-section'>
-                        {questions[currentQuestion].answerOptions.map(
-                            (answerOption) => (
-                                <button
-                                    onClick={() =>
-                                        handleAnswerButtonClick(
-                                            answerOption.isCorrect
-                                        )
-                                    }
-                                >
-                                    {answerOption.answerText}
-                                </button>
-                            )
-                        )}
-                    </div>
-                </>
-            )}
-        </div>
+                ) : (
+                    <>
+                        <div className='question-section'>
+                            <div className='question-count'>
+                                <span>Question {currentQuestion + 1}</span>/
+                                {questions.length}
+                            </div>
+                            <div className='question-text'>
+                                {questions[currentQuestion].questionText}
+                            </div>
+                        </div>
+                        <div className='answer-section'>
+                            {questions[currentQuestion].answerOptions.map(
+                                (answerOption) => (
+                                    <button
+                                        onClick={() =>
+                                            handleAnswerButtonClick(
+                                                answerOption.isCorrect
+                                            )
+                                        }
+                                    >
+                                        {answerOption.answerText}
+                                    </button>
+                                )
+                            )}
+                        </div>
+                    </>
+                )}
+            </div>
+        </>
     );
 }
