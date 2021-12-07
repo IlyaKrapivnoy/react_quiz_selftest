@@ -2,14 +2,16 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
-        <nav
-            style={{
-                borderBottom: 'solid 1px',
-                paddingBottom: '1rem',
-            }}
-        >
-            <Link to='/'>QUIZ</Link>
-            <Link to='/results'>Results</Link>
+        <nav>
+            <Link to='/' style={{ margin: '0 10px', textDecoration: 'none' }}>
+                QUIZ
+            </Link>
+            <Link
+                to='/results'
+                style={{ margin: '0 10px', textDecoration: 'none' }}
+            >
+                Results
+            </Link>
         </nav>
     );
 };
