@@ -62,47 +62,49 @@ export default function App() {
     return (
         <>
             <Header />
-            <div className='app'>
-                {showScore ? (
-                    <div className='score-section'>
-                        You scored {score} out of {questions.length}
-                        <button
-                            onClick={() => {
-                                setShowScore(false);
-                                setCurrentQuestion(0);
-                            }}
-                        >
-                            Play again
-                        </button>
-                    </div>
-                ) : (
-                    <>
-                        <div className='question-section'>
-                            <div className='question-count'>
-                                <span>Question {currentQuestion + 1}</span>/
-                                {questions.length}
-                            </div>
-                            <div className='question-text'>
-                                {questions[currentQuestion].questionText}
-                            </div>
+            <div className='wrapper'>
+                <div className='app'>
+                    {showScore ? (
+                        <div className='score-section'>
+                            You scored {score} out of {questions.length}
+                            <button
+                                onClick={() => {
+                                    setShowScore(false);
+                                    setCurrentQuestion(0);
+                                }}
+                            >
+                                Play again
+                            </button>
                         </div>
-                        <div className='answer-section'>
-                            {questions[currentQuestion].answerOptions.map(
-                                (answerOption) => (
-                                    <button
-                                        onClick={() =>
-                                            handleAnswerButtonClick(
-                                                answerOption.isCorrect
-                                            )
-                                        }
-                                    >
-                                        {answerOption.answerText}
-                                    </button>
-                                )
-                            )}
-                        </div>
-                    </>
-                )}
+                    ) : (
+                        <>
+                            <div className='question-section'>
+                                <div className='question-count'>
+                                    <span>Question {currentQuestion + 1}</span>/
+                                    {questions.length}
+                                </div>
+                                <div className='question-text'>
+                                    {questions[currentQuestion].questionText}
+                                </div>
+                            </div>
+                            <div className='answer-section'>
+                                {questions[currentQuestion].answerOptions.map(
+                                    (answerOption) => (
+                                        <button
+                                            onClick={() =>
+                                                handleAnswerButtonClick(
+                                                    answerOption.isCorrect
+                                                )
+                                            }
+                                        >
+                                            {answerOption.answerText}
+                                        </button>
+                                    )
+                                )}
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
         </>
     );

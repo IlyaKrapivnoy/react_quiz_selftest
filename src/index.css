@@ -13,9 +13,6 @@ body {
   
   body {
     background-color: #7cc6fe;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
   }
   
@@ -29,6 +26,14 @@ body {
     box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
     display: flex;
     justify-content: space-evenly;
+    
+  }
+
+  .wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
   }
   
   .score-section {
