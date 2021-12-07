@@ -54,8 +54,7 @@ export default function App() {
         if (nextQuestion < questions.length) {
             setCurrentQuestion(nextQuestion);
         } else {
-            // setShowScore(true);
-            setCurrentQuestion(0);
+            setShowScore(true);
         }
     };
 
@@ -64,6 +63,14 @@ export default function App() {
             {showScore ? (
                 <div className='score-section'>
                     You scored {score} out of {questions.length}
+                    <button
+                        onClick={() => {
+                            setShowScore(false);
+                            setCurrentQuestion(0);
+                        }}
+                    >
+                        Play again
+                    </button>
                 </div>
             ) : (
                 <>
