@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, InputBase } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    textField: {
+        border: '1px solid #fff',
+        borderRadius: theme.shape.borderRadius,
+        height: '45px',
+        padding: theme.spacing(2),
+        color: '#fff',
+    },
+}));
 
 const Quiz = () => {
+    const classes = useStyles();
     const questions = [
         {
             questionText: 'What is the capital of France?',
@@ -61,6 +73,7 @@ const Quiz = () => {
             setShowScore(true);
         }
     };
+
     return (
         <div className='wrapper'>
             <div className='app'>
@@ -68,9 +81,10 @@ const Quiz = () => {
                     <div className='score-section'>
                         You scored {score} out of {questions.length}
                         <div className='left-side-score-section'>
-                            <TextField
+                            <InputBase
                                 variant='outlined'
-                                label='Enter Your Name'
+                                placeholder='Enter Your Name 2'
+                                className={classes.textField}
                             />
                             <Button
                                 onClick={() => {
@@ -93,7 +107,10 @@ const Quiz = () => {
                                 {questions[currentQuestion].questionText}
                             </div>
                         </div>
-                        <div className='answer-section'>
+                        <div
+                            className='answer-section'
+                            // style={{ backgroundColor: `isCorrect` ? 'green' : 'red' }}
+                        >
                             {questions[currentQuestion].answerOptions.map(
                                 (answerOption) => (
                                     <Button
