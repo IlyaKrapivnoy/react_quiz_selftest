@@ -13,9 +13,6 @@ body {
   
   body {
     background-color: #7cc6fe;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
   }
   
@@ -29,12 +26,41 @@ body {
     box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
     display: flex;
     justify-content: space-evenly;
+    
+  }
+ 
+  .wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .userName {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 20%;
+    font-size: 20px;
+    letter-spacing: 2px;
   }
   
   .score-section {
     display: flex;
     font-size: 24px;
     align-items: center;
+  }
+
+  .left-side-score-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+  }
+
+  .right-side-score-section {
+      padding: 0 20px;
   }
   
   /* QUESTION/TIMER/LEFT SECTION */
@@ -71,20 +97,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-  }
-  
-  button {
-    width: 100%;
-    font-size: 16px;
-    color: #ffffff;
-    background-color: #252d4a;
-    border-radius: 15px;
-    display: flex;
-    padding: 5px;
-    justify-content: flex-start;
-    align-items: center;
-    border: 5px solid #234668;
-    cursor: pointer;
   }
   
   .correct {
