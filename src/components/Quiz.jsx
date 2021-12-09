@@ -84,7 +84,11 @@ const Quiz = () => {
     };
 
     const handleUsernameInput = () => {
-        setUsernameInput(!usernameInput);
+        if (username.length < 2) {
+            alert('Username should be longer than 2 characters');
+        } else {
+            setUsernameInput(!usernameInput);
+        }
     };
 
     return (
@@ -92,7 +96,6 @@ const Quiz = () => {
             <div className='userName'>
                 <Typography>Username:</Typography>
                 {usernameInput ? (
-                    // `${username}`
                     <div className={classes.userNameDisplay}>{username}</div>
                 ) : (
                     <InputBase
