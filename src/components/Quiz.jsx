@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, InputBase, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
- 
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -43,52 +42,92 @@ const useStyles = makeStyles((theme) => ({
 
 const Quiz = () => {
     const classes = useStyles();
-    const questions = [
-        {
-            questionText: 'What is the capital of France?',
-            answerOptions: [
-                { answerText: 'New York', isCorrect: false },
-                { answerText: 'London', isCorrect: false },
-                { answerText: 'Paris', isCorrect: true },
-                { answerText: 'Dublin', isCorrect: false },
-            ],
-        },
-        {
-            questionText: 'Who is CEO of Tesla?',
-            answerOptions: [
-                { answerText: 'Jeff Bezos', isCorrect: false },
-                { answerText: 'Elon Musk', isCorrect: true },
-                { answerText: 'Bill Gates', isCorrect: false },
-                { answerText: 'Tony Stark', isCorrect: false },
-            ],
-        },
-        {
-            questionText: 'The iPhone was created by which company?',
-            answerOptions: [
-                { answerText: 'Apple', isCorrect: true },
-                { answerText: 'Intel', isCorrect: false },
-                { answerText: 'Amazon', isCorrect: false },
-                { answerText: 'Microsoft', isCorrect: false },
-            ],
-        },
-        {
-            questionText: 'How many Harry Potter books are there?',
-            answerOptions: [
-                { answerText: '1', isCorrect: false },
-                { answerText: '4', isCorrect: false },
-                { answerText: '6', isCorrect: false },
-                { answerText: '7', isCorrect: true },
-            ],
-        },
-    ];
+    const [questions, setQuestions] = useState([]);
 
-    // const questionsAPI =
-    //     'https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple';
+    // const questions = [
+    //     {
+    //         questionText: 'What is the capital of France?',
+    //         answerOptions: [
+    //             { answerText: 'New York', isCorrect: false },
+    //             { answerText: 'London', isCorrect: false },
+    //             { answerText: 'Paris', isCorrect: true },
+    //             { answerText: 'Dublin', isCorrect: false },
+    //         ],
+    //     },
+    //     {
+    //         questionText: 'Who is CEO of Tesla?',
+    //         answerOptions: [
+    //             { answerText: 'Jeff Bezos', isCorrect: false },
+    //             { answerText: 'Elon Musk', isCorrect: true },
+    //             { answerText: 'Bill Gates', isCorrect: false },
+    //             { answerText: 'Tony Stark', isCorrect: false },
+    //         ],
+    //     },
+    //     {
+    //         questionText: 'The iPhone was created by which company?',
+    //         answerOptions: [
+    //             { answerText: 'Apple', isCorrect: true },
+    //             { answerText: 'Intel', isCorrect: false },
+    //             { answerText: 'Amazon', isCorrect: false },
+    //             { answerText: 'Microsoft', isCorrect: false },
+    //         ],
+    //     },
+    //     {
+    //         questionText: 'How many Harry Potter books are there?',
+    //         answerOptions: [
+    //             { answerText: '1', isCorrect: false },
+    //             { answerText: '4', isCorrect: false },
+    //             { answerText: '6', isCorrect: false },
+    //             { answerText: '7', isCorrect: true },
+    //         ],
+    //     },
+    // ];
+
+    const questionsAPI =
+        'https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple';
+
+    useEffect(() => {
+        (async function () {
+            const response = await fetch(questionsAPI);
+            const data = await response.json();
+            localStorage.setItem('questionsAPI', JSON.stringify(data.results));
+            const transfomedData = data.results.map((question) => {
+                const correctAnswer = {
+                    answerText: question.correct_answer,
+                    isCorrect: true,
+                };
+                const answerOptions = question.incorrect_answers.map(
+                    (option) => ({ answerText: option, isCorrect: false })
+                );
+                answerOptions.splice(
+                    Math.floor(Math.random() * 4),
+                    0,
+                    correctAnswer
+                );
+
+                const converted = {
+                    questionText: question.question,
+                    answerOptions,
+                };
+
+                return converted;
+            });
+            setQuestions(transfomedData);
+        })();
+    }, []);
+
+    const [score, setScore] = useState(0);
+    const [username, setUsername] = useState('');
+
+    const handleGameData = (username, score) => {
+        const userData = { username, score };
+        const prevResult = JSON.parse(localStorage.getItem('game')) ?? [];
+        console.log({ prevResult });
+        localStorage.setItem('game', JSON.stringify([...prevResult, userData]));
+    };
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [showScore, setShowScore] = useState(false);
-    const [score, setScore] = useState(0);
-    const [username, setUsername] = useState('');
     const [usernameInput, setUsernameInput] = useState(false);
     const [openUsernameAlert, setOpenUsernameAlert] = useState(false);
     const [openCorrectAnswerAlert, setOpenCorrectAnswerAlert] = useState(false);
@@ -106,12 +145,14 @@ const Quiz = () => {
             setOpenCorrectAnswerAlert(false);
         }
 
-        const nextQuestion = currentQuestion + 1;
-        if (nextQuestion < questions.length) {
-            setCurrentQuestion(nextQuestion);
-        } else {
-            setShowScore(true);
-        }
+        setTimeout(() => {
+            const nextQuestion = currentQuestion + 1;
+            if (nextQuestion < questions.length) {
+                setCurrentQuestion(nextQuestion);
+            } else {
+                setShowScore(true);
+            }
+        }, 1500);
     };
 
     const handleUsernameInput = () => {
@@ -125,10 +166,9 @@ const Quiz = () => {
         }
     };
 
-    const handleGameData = (username, score) => {
-        console.log({ username, score });
-    };
-
+    if (questions.length === 0) {
+        return 'Loading';
+    }
     return (
         <div className='wrapper'>
             {cantPlay && (
@@ -170,10 +210,10 @@ const Quiz = () => {
                             <Button
                                 variant='outlined'
                                 color='secondary'
-                                onClick={(score, username) => {
+                                onClick={() => {
                                     setShowScore(false);
                                     setCurrentQuestion(0);
-                                    handleGameData(score, username);
+                                    handleGameData(username, score);
                                 }}
                             >
                                 Play again
@@ -191,13 +231,11 @@ const Quiz = () => {
                                 {questions[currentQuestion].questionText}
                             </div>
                         </div>
-                        <div
-                            className='answer-section'
-                            // style={{ backgroundColor: `isCorrect` ? 'green' : 'red' }}
-                        >
+                        <div className='answer-section'>
                             {questions[currentQuestion].answerOptions.map(
                                 (answerOption) => (
                                     <Button
+                                        key={answerOption.answerText}
                                         onClick={() =>
                                             handleAnswerButtonClick(
                                                 answerOption.isCorrect
