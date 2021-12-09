@@ -34,23 +34,15 @@ export default function ResultsTable() {
             <Table className={classes.table} aria-label='simple table'>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align='right'>Calories</TableCell>
-                        <TableCell align='right'>Fat&nbsp;(g)</TableCell>
-                        <TableCell align='right'>Carbs&nbsp;(g)</TableCell>
-                        <TableCell align='right'>Protein&nbsp;(g)</TableCell>
+                        <TableCell align='center'>USERNAME</TableCell>
+                        <TableCell align='center'>SCORE</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
                         <TableRow key={row.name}>
-                            <TableCell component='th' scope='row'>
-                                {row.name}
-                            </TableCell>
-                            <TableCell align='right'>{row.calories}</TableCell>
-                            <TableCell align='right'>{row.fat}</TableCell>
-                            <TableCell align='right'>{row.carbs}</TableCell>
-                            <TableCell align='right'>{row.protein}</TableCell>
+                            <TableCell align='center'>{row.calories}</TableCell>
+                            <TableCell align='center'>{row.fat}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
