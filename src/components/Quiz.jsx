@@ -7,8 +7,15 @@ const useStyles = makeStyles((theme) => ({
         border: '1px solid #fff',
         borderRadius: theme.shape.borderRadius,
         height: '45px',
+        minWidth: 200,
         padding: theme.spacing(2),
         color: '#fff',
+    },
+    userNameDisplay: {
+        height: '45px',
+        minWidth: 200,
+        display: 'flex',
+        alignItems: 'center',
     },
 }));
 
@@ -60,6 +67,7 @@ const Quiz = () => {
     const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
     const [username, setUsername] = useState('');
+    const [usernameInput, setUsernameInput] = useState(false);
 
     const handleAnswerButtonClick = (isCorrect) => {
         if (isCorrect === true) {
@@ -75,17 +83,31 @@ const Quiz = () => {
         }
     };
 
+    const handleUsernameInput = () => {
+        setUsernameInput(!usernameInput);
+    };
+
     return (
         <div className='wrapper'>
             <div className='userName'>
                 <Typography>Username:</Typography>
-                <InputBase
-                    variant='outlined'
-                    placeholder='Enter Your Name 2'
-                    className={classes.textField}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                {username}
+                {usernameInput ? (
+                    // `${username}`
+                    <div className={classes.userNameDisplay}>{username}</div>
+                ) : (
+                    <InputBase
+                        variant='outlined'
+                        placeholder='Enter Your Name'
+                        className={classes.textField}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                )}
+                <Button
+                    onClick={handleUsernameInput}
+                    className={classes.buttonStyles}
+                >
+                    {usernameInput ? 'Change Name' : 'Choose Name'}
+                </Button>
             </div>
             <div className='app'>
                 {showScore ? (
@@ -93,7 +115,7 @@ const Quiz = () => {
                         You scored {score} out of {questions.length}
                         <div className='left-side-score-section'>
                             <Button
-                                onClick={() => {
+                                onClick={({ username, score }) => {
                                     setShowScore(false);
                                     setCurrentQuestion(0);
                                 }}
