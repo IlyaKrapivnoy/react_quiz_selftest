@@ -34,6 +34,16 @@ body {
     display: flex;
     justify-content: center;
     height: 100vh;
+    flex-direction: column;
+  }
+
+  .userName {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 20%;
+    font-size: 20px;
+    letter-spacing: 2px;
   }
   
   .score-section {

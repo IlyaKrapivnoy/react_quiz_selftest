@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, InputBase } from '@material-ui/core';
+import { Button, InputBase, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +59,7 @@ const Quiz = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
+    const [username, setUsername] = useState('');
 
     const handleAnswerButtonClick = (isCorrect) => {
         if (isCorrect === true) {
@@ -76,16 +77,21 @@ const Quiz = () => {
 
     return (
         <div className='wrapper'>
+            <div className='userName'>
+                <Typography>Username:</Typography>
+                <InputBase
+                    variant='outlined'
+                    placeholder='Enter Your Name 2'
+                    className={classes.textField}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                {username}
+            </div>
             <div className='app'>
                 {showScore ? (
                     <div className='score-section'>
                         You scored {score} out of {questions.length}
                         <div className='left-side-score-section'>
-                            <InputBase
-                                variant='outlined'
-                                placeholder='Enter Your Name 2'
-                                className={classes.textField}
-                            />
                             <Button
                                 onClick={() => {
                                     setShowScore(false);
