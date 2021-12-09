@@ -41,6 +41,11 @@ body {
     font-size: 24px;
     align-items: center;
   }
+
+  .left-side-score-section {
+    display: flex;
+    flex-direction: column;
+  }
   
   /* QUESTION/TIMER/LEFT SECTION */
   .question-section {
@@ -78,7 +83,7 @@ body {
     justify-content: space-between;
   }
   
-  button {
+  /* button {
     width: 100%;
     font-size: 16px;
     color: #ffffff;
@@ -90,7 +95,7 @@ body {
     align-items: center;
     border: 5px solid #234668;
     cursor: pointer;
-  }
+  } */
   
   .correct {
     background-color: #2f922f;
