@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     header: {
         display: 'flex',
         justifyContent: 'center',
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         margin: '0 16px',
         textDecoration: 'none',
     },
-}));
+});
 
 const Header = () => {
     const classes = useStyles();
