@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, InputBase, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -16,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 200,
         display: 'flex',
         alignItems: 'center',
+    },
+    alertStyles: {
+        position: 'absolute',
+        bottom: '5%',
+        left: '5%',
+        backgroundColor: '#f95f5f',
     },
 }));
 
@@ -68,6 +75,7 @@ const Quiz = () => {
     const [score, setScore] = useState(0);
     const [username, setUsername] = useState('');
     const [usernameInput, setUsernameInput] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
 
     const handleAnswerButtonClick = (isCorrect) => {
         if (isCorrect === true) {
@@ -85,10 +93,15 @@ const Quiz = () => {
 
     const handleUsernameInput = () => {
         if (username.length < 2) {
-            alert('Username should be longer than 2 characters');
+            setOpenAlert(true);
         } else {
             setUsernameInput(!usernameInput);
+            setOpenAlert(false);
         }
+    };
+
+    const handleGameData = (username, score) => {
+        console.log({ username, score });
     };
 
     return (
@@ -122,9 +135,10 @@ const Quiz = () => {
                             <Button
                                 variant='outlined'
                                 color='secondary'
-                                onClick={() => {
+                                onClick={(score, username) => {
                                     setShowScore(false);
                                     setCurrentQuestion(0);
+                                    handleGameData(score, username);
                                 }}
                             >
                                 Play again
@@ -163,6 +177,11 @@ const Quiz = () => {
                     </>
                 )}
             </div>
+            {openAlert ? (
+                <Alert className={classes.alertStyles}>
+                    Username should be longer than 2 characters
+                </Alert>
+            ) : null}
         </div>
     );
 };
