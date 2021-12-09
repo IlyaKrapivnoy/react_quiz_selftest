@@ -41,8 +41,8 @@ export default function App() {
         },
     ];
 
-    const questionsAPI =
-        'https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple';
+    // const questionsAPI =
+    //     'https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple';
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [showScore, setShowScore] = useState(false);
