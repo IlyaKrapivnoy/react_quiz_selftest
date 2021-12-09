@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, InputBase, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
+ 
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -29,6 +30,14 @@ const useStyles = makeStyles((theme) => ({
         left: 'calc(50% - 72px)',
         position: 'absolute',
         backgroundColor: '#3eb361',
+    },
+    cantPlay: {
+        position: 'absolute',
+        top: '38%',
+        textTransform: 'uppercase',
+        letterSpacing: 2,
+        fontWeight: 300,
+        color: '#d32121',
     },
 }));
 
@@ -83,8 +92,13 @@ const Quiz = () => {
     const [usernameInput, setUsernameInput] = useState(false);
     const [openUsernameAlert, setOpenUsernameAlert] = useState(false);
     const [openCorrectAnswerAlert, setOpenCorrectAnswerAlert] = useState(false);
+    const [cantPlay, setCantPlay] = useState(true);
 
     const handleAnswerButtonClick = (isCorrect) => {
+        if (username.length < 2) {
+            return null;
+        }
+
         if (isCorrect === true) {
             setOpenCorrectAnswerAlert(true);
             setScore(score + 1);
@@ -103,9 +117,11 @@ const Quiz = () => {
     const handleUsernameInput = () => {
         if (username.length < 2) {
             setOpenUsernameAlert(true);
+            setCantPlay(true);
         } else {
             setUsernameInput(!usernameInput);
             setOpenUsernameAlert(false);
+            setCantPlay(false);
         }
     };
 
@@ -115,6 +131,11 @@ const Quiz = () => {
 
     return (
         <div className='wrapper'>
+            {cantPlay && (
+                <Typography className={classes.cantPlay}>
+                    You can't play before you enter your name
+                </Typography>
+            )}
             {openCorrectAnswerAlert ? (
                 <Alert className={classes.alertCorrectAnswerStyles}>
                     AWESOME!
