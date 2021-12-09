@@ -29,16 +29,6 @@ body {
     
   }
  
-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #252d4a;
-    height: 40px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
   .wrapper {
     align-items: center;
     display: flex;

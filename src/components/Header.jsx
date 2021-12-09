@@ -1,18 +1,39 @@
 import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
+const useStyles = makeStyles((theme) => ({
+    header: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#252d4a',
+        height: 40,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: 20,
+    },
+    link: {
+        margin: '0 16px',
+        textDecoration: 'none',
+    },
+}));
 
 const Header = () => {
+    const classes = useStyles();
+
     return (
-        <nav>
-            <Link to='/' style={{ margin: '0 10px', textDecoration: 'none' }}>
-                QUIZ
-            </Link>
-            <Link
-                to='/results'
-                style={{ margin: '0 10px', textDecoration: 'none' }}
-            >
-                Results
-            </Link>
-        </nav>
+        <AppBar position='static'>
+            <Toolbar className={classes.header}>
+                <Link to='/' className={classes.link}>
+                    QUIZ
+                </Link>
+                <Link to='/results' className={classes.link}>
+                    Results
+                </Link>
+            </Toolbar>
+        </AppBar>
     );
 };
 
