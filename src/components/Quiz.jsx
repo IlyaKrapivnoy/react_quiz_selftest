@@ -115,10 +115,14 @@ const Quiz = () => {
             <div className='app'>
                 {showScore ? (
                     <div className='score-section'>
-                        You scored {score} out of {questions.length}
+                        <div className='right-side-score-section'>
+                            You scored {score} out of {questions.length}
+                        </div>
                         <div className='left-side-score-section'>
                             <Button
-                                onClick={({ username, score }) => {
+                                variant='outlined'
+                                color='secondary'
+                                onClick={() => {
                                     setShowScore(false);
                                     setCurrentQuestion(0);
                                 }}

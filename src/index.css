@@ -58,6 +58,10 @@ body {
     justify-content: space-around;
     height: 100%;
   }
+
+  .right-side-score-section {
+      padding: 0 20px;
+  }
   
   /* QUESTION/TIMER/LEFT SECTION */
   .question-section {
