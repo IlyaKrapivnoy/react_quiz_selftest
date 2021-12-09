@@ -18,11 +18,17 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
     },
-    alertStyles: {
+    alertUsernameStyles: {
         position: 'absolute',
         bottom: '5%',
         left: '5%',
         backgroundColor: '#f95f5f',
+    },
+    alertCorrectAnswerStyles: {
+        top: '10%',
+        left: 'calc(50% - 72px)',
+        position: 'absolute',
+        backgroundColor: '#3eb361',
     },
 }));
 
@@ -75,12 +81,15 @@ const Quiz = () => {
     const [score, setScore] = useState(0);
     const [username, setUsername] = useState('');
     const [usernameInput, setUsernameInput] = useState(false);
-    const [openAlert, setOpenAlert] = useState(false);
+    const [openUsernameAlert, setOpenUsernameAlert] = useState(false);
+    const [openCorrectAnswerAlert, setOpenCorrectAnswerAlert] = useState(false);
 
     const handleAnswerButtonClick = (isCorrect) => {
         if (isCorrect === true) {
-            alert('yeah');
+            setOpenCorrectAnswerAlert(true);
             setScore(score + 1);
+        } else {
+            setOpenCorrectAnswerAlert(false);
         }
 
         const nextQuestion = currentQuestion + 1;
@@ -93,10 +102,10 @@ const Quiz = () => {
 
     const handleUsernameInput = () => {
         if (username.length < 2) {
-            setOpenAlert(true);
+            setOpenUsernameAlert(true);
         } else {
             setUsernameInput(!usernameInput);
-            setOpenAlert(false);
+            setOpenUsernameAlert(false);
         }
     };
 
@@ -106,6 +115,11 @@ const Quiz = () => {
 
     return (
         <div className='wrapper'>
+            {openCorrectAnswerAlert ? (
+                <Alert className={classes.alertCorrectAnswerStyles}>
+                    AWESOME!
+                </Alert>
+            ) : null}
             <div className='userName'>
                 <Typography>Username:</Typography>
                 {usernameInput ? (
@@ -177,8 +191,8 @@ const Quiz = () => {
                     </>
                 )}
             </div>
-            {openAlert ? (
-                <Alert className={classes.alertStyles}>
+            {openUsernameAlert ? (
+                <Alert className={classes.alertUsernameStyles}>
                     Username should be longer than 2 characters
                 </Alert>
             ) : null}
