@@ -186,6 +186,12 @@ const Quiz = () => {
         );
     }
 
+    function decodeHtmlCharCodes(str) {
+        return str.replace(/(&#(\d+);)/g, function (match, capture, charCode) {
+            return String.fromCharCode(charCode);
+        });
+    }
+
     return (
         <div className='wrapper'>
             {cantPlay && (
@@ -247,8 +253,11 @@ const Quiz = () => {
 
                             <div className='question-text'>
                                 {_.unescape(
-                                    String(
-                                        questions[currentQuestion].questionText
+                                    decodeHtmlCharCodes(
+                                        String(
+                                            questions[currentQuestion]
+                                                .questionText
+                                        ).replace('&#039;', "'")
                                     )
                                 )}
                             </div>
