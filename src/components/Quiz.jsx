@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, InputBase, Typography } from '@material-ui/core';
+import {
+    Button,
+    CircularProgress,
+    InputBase,
+    Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 
@@ -37,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
         letterSpacing: 2,
         fontWeight: 300,
         color: '#d32121',
+    },
+    loader: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '120px',
     },
 }));
 
@@ -167,7 +178,11 @@ const Quiz = () => {
     };
 
     if (questions.length === 0) {
-        return 'Loading';
+        return (
+            <div className={classes.loader}>
+                <CircularProgress />
+            </div>
+        );
     }
     return (
         <div className='wrapper'>
