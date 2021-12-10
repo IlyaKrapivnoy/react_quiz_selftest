@@ -273,7 +273,13 @@ const Quiz = () => {
                                             )
                                         }
                                     >
-                                        {answerOption.answerText}
+                                        {_.unescape(
+                                            decodeHtmlCharCodes(
+                                                String(
+                                                    answerOption.answerText
+                                                ).replace('&#039;', "'")
+                                            )
+                                        )}
                                     </Button>
                                 )
                             )}
