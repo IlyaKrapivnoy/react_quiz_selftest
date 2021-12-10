@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Button, InputBase, Typography } from '@material-ui/core';
+import {
+    Button,
+    CircularProgress,
+    InputBase,
+    Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
+import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -37,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
         letterSpacing: 2,
         fontWeight: 300,
         color: '#d32121',
+    },
+    loader: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '120px',
     },
 }));
 
@@ -167,8 +179,19 @@ const Quiz = () => {
     };
 
     if (questions.length === 0) {
-        return 'Loading';
+        return (
+            <div className={classes.loader}>
+                <CircularProgress />
+            </div>
+        );
     }
+
+    function decodeHtmlCharCodes(str) {
+        return str.replace(/(&#(\d+);)/g, function (match, capture, charCode) {
+            return String.fromCharCode(charCode);
+        });
+    }
+
     return (
         <div className='wrapper'>
             {cantPlay && (
@@ -227,8 +250,16 @@ const Quiz = () => {
                                 <span>Question {currentQuestion + 1}</span>/
                                 {questions.length}
                             </div>
+
                             <div className='question-text'>
-                                {questions[currentQuestion].questionText}
+                                {_.unescape(
+                                    decodeHtmlCharCodes(
+                                        String(
+                                            questions[currentQuestion]
+                                                .questionText
+                                        ).replace('&#039;', "'")
+                                    )
+                                )}
                             </div>
                         </div>
                         <div className='answer-section'>
@@ -242,7 +273,13 @@ const Quiz = () => {
                                             )
                                         }
                                     >
-                                        {answerOption.answerText}
+                                        {_.unescape(
+                                            decodeHtmlCharCodes(
+                                                String(
+                                                    answerOption.answerText
+                                                ).replace('&#039;', "'")
+                                            )
+                                        )}
                                     </Button>
                                 )
                             )}
