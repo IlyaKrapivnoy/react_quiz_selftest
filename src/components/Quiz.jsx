@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
+import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -184,6 +185,7 @@ const Quiz = () => {
             </div>
         );
     }
+
     return (
         <div className='wrapper'>
             {cantPlay && (
@@ -242,8 +244,13 @@ const Quiz = () => {
                                 <span>Question {currentQuestion + 1}</span>/
                                 {questions.length}
                             </div>
+
                             <div className='question-text'>
-                                {questions[currentQuestion].questionText}
+                                {_.unescape(
+                                    String(
+                                        questions[currentQuestion].questionText
+                                    )
+                                )}
                             </div>
                         </div>
                         <div className='answer-section'>
