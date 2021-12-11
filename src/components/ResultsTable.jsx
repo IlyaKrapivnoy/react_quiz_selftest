@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import ResultsTablePagination from './ResultsTablePagination';
+import { Button } from '@material-ui/core';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles({
     table: {
@@ -30,6 +32,11 @@ export default function ResultsTable() {
     const emptyRows =
         rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+    const handleDelete = (row) => {
+        const filteredRows = rows.filter((line) => line.id !== row.id);
+        setRows(filteredRows);
+    };
+
     return (
         <>
             <TableContainer component={Paper}>
@@ -38,6 +45,7 @@ export default function ResultsTable() {
                         <TableRow>
                             <TableCell align='center'>USERNAME</TableCell>
                             <TableCell align='center'>SCORE</TableCell>
+                            <TableCell align='center'>CLEAR</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -47,12 +55,21 @@ export default function ResultsTable() {
                                 page * rowsPerPage + rowsPerPage
                             )
                             .map((row, i) => (
-                                <TableRow key={i}>
+                                <TableRow key={uuidv4()}>
                                     <TableCell align='center'>
                                         {row.username}
                                     </TableCell>
                                     <TableCell align='center'>
                                         {row.score}
+                                    </TableCell>
+                                    <TableCell align='center'>
+                                        <Button
+                                            variant='contained'
+                                            color='primary'
+                                            onClick={() => handleDelete(row)}
+                                        >
+                                            x
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
