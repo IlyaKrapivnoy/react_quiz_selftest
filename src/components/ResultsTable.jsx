@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import ResultsTablePagination from './ResultsTablePagination';
 
 const useStyles = makeStyles({
     table: {
@@ -18,6 +19,8 @@ export default function ResultsTable() {
     const classes = useStyles();
 
     const [rows, setRows] = useState([]);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     useEffect(() => {
         const results = JSON.parse(localStorage.getItem('game')) ?? [];
@@ -25,23 +28,41 @@ export default function ResultsTable() {
     }, []);
 
     return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label='simple table'>
-                <TableHead>
-                    <TableRow>
-                        <TableCell align='center'>USERNAME</TableCell>
-                        <TableCell align='center'>SCORE</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row, i) => (
-                        <TableRow key={i}>
-                            <TableCell align='center'>{row.username}</TableCell>
-                            <TableCell align='center'>{row.score}</TableCell>
+        <>
+            <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label='simple table'>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align='center'>USERNAME</TableCell>
+                            <TableCell align='center'>SCORE</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {rows
+                            .slice(
+                                page * rowsPerPage,
+                                page * rowsPerPage + rowsPerPage
+                            )
+                            .map((row, i) => (
+                                <TableRow key={i}>
+                                    <TableCell align='center'>
+                                        {row.username}
+                                    </TableCell>
+                                    <TableCell align='center'>
+                                        {row.score}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <ResultsTablePagination
+                rows={rows}
+                page={page}
+                setPage={setPage}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+            />
+        </>
     );
 }
