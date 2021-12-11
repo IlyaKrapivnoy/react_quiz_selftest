@@ -27,6 +27,9 @@ export default function ResultsTable() {
         setRows(results);
     }, []);
 
+    const emptyRows =
+        rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
     return (
         <>
             <TableContainer component={Paper}>
@@ -53,6 +56,15 @@ export default function ResultsTable() {
                                     </TableCell>
                                 </TableRow>
                             ))}
+                        {emptyRows > 0 && (
+                            <TableRow
+                                style={{
+                                    height: ('' ? 33 : 53) * emptyRows,
+                                }}
+                            >
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>
