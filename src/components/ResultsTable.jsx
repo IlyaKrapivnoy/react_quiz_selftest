@@ -26,6 +26,13 @@ export default function ResultsTable() {
 
     useEffect(() => {
         const results = JSON.parse(localStorage.getItem('game')) ?? [];
+        const resultsWithoutId = results.filter((result) => !('id' in result));
+        if (resultsWithoutId.length > 0) {
+            resultsWithoutId.forEach((item) => {
+                item.id = uuidv4();
+            });
+            localStorage.setItem('game', JSON.stringify(results));
+        }
         setRows(results);
     }, []);
 
@@ -33,7 +40,9 @@ export default function ResultsTable() {
         rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     const handleDelete = (row) => {
+        console.log({ row });
         const filteredRows = rows.filter((line) => line.id !== row.id);
+        localStorage.setItem('game', JSON.stringify(filteredRows));
         setRows(filteredRows);
     };
 
