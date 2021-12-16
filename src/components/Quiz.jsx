@@ -8,6 +8,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import _ from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -132,7 +133,7 @@ const Quiz = () => {
     const [username, setUsername] = useState('');
 
     const handleGameData = (username, score) => {
-        const userData = { username, score };
+        const userData = { username, score, id: uuidv4() };
         const prevResult = JSON.parse(localStorage.getItem('game')) ?? [];
         console.log({ prevResult });
         localStorage.setItem('game', JSON.stringify([...prevResult, userData]));

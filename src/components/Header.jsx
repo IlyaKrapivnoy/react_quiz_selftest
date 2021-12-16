@@ -26,13 +26,19 @@ const useStyles = makeStyles({
         position: 'absolute',
         right: '12%',
     },
+    toolbarWrapper: {
+        '& .MuiToolbar-gutters': {
+            paddingLeft: 0,
+            paddingRight: 0,
+        },
+    },
 });
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     const classes = useStyles();
 
     return (
-        <AppBar position='static'>
+        <AppBar position='static' className={classes.toolbarWrapper}>
             <Toolbar className={classes.header}>
                 <div className={classes.navLinks}>
                     <Link to='/' className={classes.link}>
