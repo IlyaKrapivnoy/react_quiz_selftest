@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import ResultsTablePagination from './ResultsTablePagination';
 import { Button } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
+import { Result } from '../types';
 
 const useStyles = makeStyles({
     table: {
@@ -20,12 +21,13 @@ const useStyles = makeStyles({
 export default function ResultsTable() {
     const classes = useStyles();
 
-    const [rows, setRows] = useState([]);
+    const [rows, setRows] = useState<Result[]>([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     useEffect(() => {
-        const results = JSON.parse(localStorage.getItem('game')) ?? [];
+        const results: Result[] =
+            JSON.parse(localStorage.getItem('game')!!) ?? [];
         const resultsWithoutId = results.filter((result) => !('id' in result));
         if (resultsWithoutId.length > 0) {
             resultsWithoutId.forEach((item) => {
@@ -39,7 +41,7 @@ export default function ResultsTable() {
     const emptyRows =
         rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-    const handleDelete = (row) => {
+    const handleDelete = (row: Result) => {
         console.log({ row });
         const filteredRows = rows.filter((line) => line.id !== row.id);
         localStorage.setItem('game', JSON.stringify(filteredRows));
