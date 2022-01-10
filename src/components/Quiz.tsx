@@ -10,6 +10,22 @@ import Alert from '@material-ui/lab/Alert';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
+type APIQuestion = {
+    question: string;
+    correct_answer: string;
+    incorrect_answers: string[];
+};
+
+type AnswerOption = {
+    answerText: string;
+    isCorrect: boolean;
+};
+
+type Question = {
+    questionText: string;
+    answerOptions: AnswerOption[];
+};
+
 const useStyles = makeStyles((theme) => ({
     textField: {
         border: '1px solid #fff',
@@ -55,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Quiz = () => {
     const classes = useStyles();
-    const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
 
     // const questions = [
     //     {
@@ -104,7 +120,7 @@ const Quiz = () => {
             const response = await fetch(questionsAPI);
             const data = await response.json();
             localStorage.setItem('questionsAPI', JSON.stringify(data.results));
-            const transfomedData = data.results.map((question) => {
+            const transfomedData = data.results.map((question: APIQuestion) => {
                 const correctAnswer = {
                     answerText: question.correct_answer,
                     isCorrect: true,
@@ -132,9 +148,9 @@ const Quiz = () => {
     const [score, setScore] = useState(0);
     const [username, setUsername] = useState('');
 
-    const handleGameData = (username, score) => {
+    const handleGameData = (username: string, score: number) => {
         const userData = { username, score, id: uuidv4() };
-        const prevResult = JSON.parse(localStorage.getItem('game')) ?? [];
+        const prevResult = JSON.parse(localStorage.getItem('game')!!) ?? [];
         console.log({ prevResult });
         localStorage.setItem('game', JSON.stringify([...prevResult, userData]));
     };
@@ -146,7 +162,7 @@ const Quiz = () => {
     const [openCorrectAnswerAlert, setOpenCorrectAnswerAlert] = useState(false);
     const [cantPlay, setCantPlay] = useState(true);
 
-    const handleAnswerButtonClick = (isCorrect) => {
+    const handleAnswerButtonClick = (isCorrect: boolean) => {
         if (username.length < 2) {
             return null;
         }
@@ -187,7 +203,7 @@ const Quiz = () => {
         );
     }
 
-    function decodeHtmlCharCodes(str) {
+    function decodeHtmlCharCodes(str: string) {
         return str.replace(/(&#(\d+);)/g, function (match, capture, charCode) {
             return String.fromCharCode(charCode);
         });
@@ -211,16 +227,12 @@ const Quiz = () => {
                     <div className={classes.userNameDisplay}>{username}</div>
                 ) : (
                     <InputBase
-                        variant='outlined'
                         placeholder='Enter Your Name'
                         className={classes.textField}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 )}
-                <Button
-                    onClick={handleUsernameInput}
-                    className={classes.buttonStyles}
-                >
+                <Button onClick={handleUsernameInput}>
                     {usernameInput ? 'Change Name' : 'Choose Name'}
                 </Button>
             </div>
