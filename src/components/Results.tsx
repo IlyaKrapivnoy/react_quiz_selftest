@@ -1,5 +1,3 @@
-import React from 'react';
-import Header from './Header';
 import ResultsTable from './ResultsTable';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,12 +12,11 @@ const useStyles = makeStyles({
     },
 });
 
-const Test1 = () => {
+const Results = () => {
     const classes = useStyles();
 
     return (
         <>
-            <Header />
             <Typography variant='h4' className={classes.title}>
                 RESULTS PAGE
             </Typography>
@@ -28,4 +25,4 @@ const Test1 = () => {
     );
 };
 
-export default Test1;
+export default Results;
