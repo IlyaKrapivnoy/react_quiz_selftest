@@ -4,6 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Button } from '@material-ui/core';
 
+interface IHeaderProps {
+    isLoggedIn: boolean;
+    setIsLoggedIn: (isLoggedIn: boolean) => void;
+}
+
 const useStyles = makeStyles({
     header: {
         display: 'flex',
@@ -34,7 +39,7 @@ const useStyles = makeStyles({
     },
 });
 
-const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+const Header = ({ isLoggedIn, setIsLoggedIn }: IHeaderProps) => {
     const classes = useStyles();
 
     return (
