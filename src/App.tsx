@@ -8,14 +8,12 @@ export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     return (
-        <>
-            <BrowserRouter>
-                <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-                <Routes>
-                    <Route path='/' exact element={<Quiz />} />
-                    <Route path='results' element={<Results />} />
-                </Routes>
-            </BrowserRouter>
-        </>
+        <BrowserRouter>
+            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <Routes>
+                <Route path='/' exact element={<Quiz />} />
+                <Route path='results' element={<Results />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
