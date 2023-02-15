@@ -53,12 +53,21 @@ const Header = ({ isLoggedIn, setIsLoggedIn }: IHeaderProps) => {
                         Results
                     </Link>
                 </div>
-                <Button
-                    className={classes.loginBtn}
-                    onClick={() => setIsLoggedIn(!isLoggedIn)}
-                >
-                    {isLoggedIn ? 'Log In' : 'Log Out'}
-                </Button>
+                {isLoggedIn ? (
+                    <Button
+                        className={classes.loginBtn}
+                        onClick={() => setIsLoggedIn(false)}
+                    >
+                        Log Out
+                    </Button>
+                ) : (
+                    <Button
+                        className={classes.loginBtn}
+                        onClick={() => setIsLoggedIn(true)}
+                    >
+                        Log In
+                    </Button>
+                )}
             </Toolbar>
         </AppBar>
     );
