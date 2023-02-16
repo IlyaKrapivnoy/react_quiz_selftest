@@ -9,22 +9,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import { Question, APIQuestion } from '../types';
 
-type APIQuestion = {
-    question: string;
-    correct_answer: string;
-    incorrect_answers: string[];
-};
 
-type AnswerOption = {
-    answerText: string;
-    isCorrect: boolean;
-};
-
-type Question = {
-    questionText: string;
-    answerOptions: AnswerOption[];
-};
 
 const useStyles = makeStyles((theme) => ({
     textField: {

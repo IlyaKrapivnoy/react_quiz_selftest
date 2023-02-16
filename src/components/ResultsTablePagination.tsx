@@ -1,15 +1,7 @@
 import React from 'react';
 import TablePagination from '@material-ui/core/TablePagination';
 import { makeStyles } from '@material-ui/core/styles';
-import { Result } from '../types';
-
-interface IResultsTablePaginationProps {
-    rows: Result[];
-    page: number;
-    setPage: (page: number) => void;
-    rowsPerPage: number;
-    setRowsPerPage: (rowsPerPage: number) => void;
-}
+import { IResultsTablePaginationProps } from '../types';
 
 const useStyles = makeStyles({
     centerPagination: {
