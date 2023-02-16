@@ -11,3 +11,19 @@ export type Result = {
     username: string;
     score: number;
 };
+
+export type APIQuestion = {
+    question: string;
+    correct_answer: string;
+    incorrect_answers: string[];
+};
+
+export type AnswerOption = {
+    answerText: string;
+    isCorrect: boolean;
+};
+
+export type Question = {
+    questionText: string;
+    answerOptions: AnswerOption[];
+};
